@@ -4,10 +4,13 @@ using Unity.Services.Mediation;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Mediation;
+using Unity.VisualScripting;
 
 
 public class MediationManager : MonoBehaviour
 {
+    [SerializeField] private string GAME_ID_IOS = "4720904";
+    [SerializeField] private string GAME_ID_ANDROID = "4720905";
     [SerializeField] private InterstitialAd _interstitialAd;
     [SerializeField] private RewardedAd _rewardedAd;
     
@@ -18,9 +21,25 @@ public class MediationManager : MonoBehaviour
 
     public async void Init()
     {
-        await UnityServices.InitializeAsync();
-
-        IsInitialized = true;
+        if (!IsInitialized)
+        {
+            // Initialize package with a custom Game ID
+            InitializationOptions options = new InitializationOptions();
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                options.SetGameId(GAME_ID_IOS);
+            }
+            else if (Application.platform == RuntimePlatform.Android)
+            {
+                options.SetGameId(GAME_ID_ANDROID);
+            }
+            await UnityServices.InitializeAsync(options);
+            
+            _interstitialAd.Init();
+            _rewardedAd.Init();
+            
+            IsInitialized = true;
+        }
     }
 
     public void LoadInterstitialAd()

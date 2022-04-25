@@ -167,6 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888e879f0ab3f408686573399cd38ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GAME_ID_IOS: 4720904
+  GAME_ID_ANDROID: 4720905
+  _interstitialAd: {fileID: 1295333636}
+  _rewardedAd: {fileID: 369661946}
 --- !u!1 &369661944
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb009a26b3ae41f3927277cb7735f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  androidAdUnitId: Android_Rewarded
+  iosAdUnitId: iOS_Rewarded
+  testAdUnitId: myRewardedAdUnitId
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,6 +346,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec07bce6b80fc47ca9e5a1fcb7e2d76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  androidAdUnitId: Android_Interstitial
+  iosAdUnitId: iOS_Interstitial
+  testAdUnitId: myExampleAdUnitId
 --- !u!1 &2140512953
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,3 +393,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc7e14905b0c48958461b14b6a84914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mediationManager: {fileID: 55327947}

@@ -36,6 +36,13 @@ public class Menu : MonoBehaviour
             mediationManager.ShowRewardedAd();
         }
 
+        string info = "Mediation SDK Status" +
+                      "\nIsInitialized :: " + mediationManager.IsInitialized +
+                      "\nIsInterstitialAdLoaded :: " + mediationManager.IsInterstitialAdLoaded +
+                      "\nIsRewardedAdLoaded :: " + mediationManager.IsRewardedAdLoaded; 
+        
+        GUI.Label(new Rect(0, 250, 200, 200), info);
+
         GUI.EndGroup();;
     }
 }
