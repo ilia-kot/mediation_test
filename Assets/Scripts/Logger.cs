@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Logger
+namespace mediation_test
 {
-    public static void Log(string message)
+    public class Logger
     {
-        Debug.Log(message);
+        public static void Log(string message)
+        {
+            Debug.Log(message);
+        }
     }
 }

@@ -4,90 +4,87 @@ using System.Collections.Generic;
 using Unity.Services.Mediation;
 using UnityEngine;
 
-public class InterstitialAd : MonoBehaviour
-{ 
-    [SerializeField] private string androidAdUnitId;
-    [SerializeField] private string iosAdUnitId;
-    [SerializeField] private string testAdUnitId;
-
-    IInterstitialAd interstitialAd;
-
-    public bool IsLoaded => interstitialAd != null && interstitialAd.AdState == AdState.Loaded;
-
-
-    public void Init()
+namespace mediation_test
+{
+    public class InterstitialAd : MonoBehaviour
     {
-        // TODO change to defines?
-        if (Application.platform == RuntimePlatform.Android) {
-            interstitialAd = MediationService.Instance.CreateInterstitialAd(androidAdUnitId);
-        } else if (Application.platform == RuntimePlatform.IPhonePlayer) {
-            interstitialAd = MediationService.Instance.CreateInterstitialAd(iosAdUnitId);
-        }
-#if UNITY_EDITOR
-        else {
-            interstitialAd = MediationService.Instance.CreateInterstitialAd(testAdUnitId);
-        }
-#endif
+        [SerializeField] private string androidAdUnitId;
+        [SerializeField] private string iosAdUnitId;
+        [SerializeField] private string testAdUnitId;
 
-        interstitialAd.OnLoaded += AdLoaded;
-        interstitialAd.OnFailedLoad += AdFailedToLoad;
-        interstitialAd.OnShowed += AdShown;
-        interstitialAd.OnFailedShow += AdFailedToShow;
-        interstitialAd.OnClosed += AdClosed;
-    }
-  
-    public void Load()
-    {
-        interstitialAd.Load();
-    }
+        private IInterstitialAd interstitialAd;
 
-    public void Show()
-    {
-        if (interstitialAd.AdState == AdState.Loaded)
+        public IInterstitialAd Interstitial => interstitialAd;
+        public bool IsLoaded => interstitialAd != null && interstitialAd.AdState == AdState.Loaded;
+        
+
+        public void Init()
         {
-            interstitialAd.Show();
+            if (Application.isEditor)
+                interstitialAd = MediationService.Instance.CreateInterstitialAd(testAdUnitId);
+            else if (Application.platform == RuntimePlatform.Android)
+                interstitialAd = MediationService.Instance.CreateInterstitialAd(androidAdUnitId);
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+                interstitialAd = MediationService.Instance.CreateInterstitialAd(iosAdUnitId);
+
+            interstitialAd.OnLoaded += AdLoaded;
+            interstitialAd.OnFailedLoad += AdFailedToLoad;
+            interstitialAd.OnShowed += AdShown;
+            interstitialAd.OnFailedShow += AdFailedToShow;
+            interstitialAd.OnClosed += AdClosed;
         }
-    }
 
-    void OnDestroy()
-    {
-        interstitialAd.OnLoaded -= AdLoaded;
-        interstitialAd.OnFailedLoad -= AdFailedToLoad;
-        interstitialAd.OnShowed -= AdShown;
-        interstitialAd.OnFailedShow -= AdFailedToShow;
-        interstitialAd.OnClosed -= AdClosed;
-        interstitialAd.Dispose();
-    }
+        public void Load()
+        {
+            interstitialAd.Load();
+        }
 
-    #region CALLBACKS
+        public void Show()
+        {
+            if (interstitialAd.AdState == AdState.Loaded)
+            {
+                interstitialAd.Show();
+            }
+        }
 
-    // Implement load event callback methods:
-    void AdLoaded(object sender, EventArgs args) {
-        Debug.Log("Ad loaded.");
-        // Execute logic for when the ad has loaded
-    }
+        void OnDestroy()
+        {
+            interstitialAd.OnLoaded -= AdLoaded;
+            interstitialAd.OnFailedLoad -= AdFailedToLoad;
+            interstitialAd.OnShowed -= AdShown;
+            interstitialAd.OnFailedShow -= AdFailedToShow;
+            interstitialAd.OnClosed -= AdClosed;
+            interstitialAd.Dispose();
+        }
 
-    void AdFailedToLoad(object sender, LoadErrorEventArgs args) {
-        Debug.Log("Ad failed to load.");
-        Debug.Log("Error: " + args.Error + " Message: " + args.Message);
-        // Execute logic for the ad failing to load.
-    }
+        #region CALLBACKS
 
-    // Implement show event callback methods:
-    void AdShown(object sender, EventArgs args) {
-        Debug.Log("Ad shown successfully.");
-        // Execute logic for the ad showing successfully.
-    }
+        void AdLoaded(object sender, EventArgs args)
+        {
+            Logger.Log("InterstitialAd :: AdLoaded");
+        }
 
-    void AdFailedToShow(object sender, ShowErrorEventArgs args) {
-        Debug.Log("Ad failed to show.");
-        // Execute logic for the ad failing to show.
-    }
+        void AdFailedToLoad(object sender, LoadErrorEventArgs args)
+        {
+            Logger.Log("InterstitialAd :: AdFailedToLoad :: Error : " + args.Error + " Message: " + args.Message);
+        }
 
-    private void AdClosed(object sender, EventArgs e) {
-        Debug.Log("Ad has closed");
-        // Execute logic after an ad has been closed.
+        void AdShown(object sender, EventArgs args)
+        {
+            Logger.Log("InterstitialAd :: AdShown");
+        }
+
+        void AdFailedToShow(object sender, ShowErrorEventArgs args)
+        {
+            Logger.Log("InterstitialAd :: AdFailedToShow :: Error : " + args.Error + " Message: " + args.Message);
+        }
+
+        private void AdClosed(object sender, EventArgs args)
+        {
+            Logger.Log("InterstitialAd :: AdClosed");
+        }
+
+        #endregion
+
     }
-    #endregion
-  
 }

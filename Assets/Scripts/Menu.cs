@@ -1,48 +1,74 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu : MonoBehaviour
+namespace mediation_test
 {
-    [SerializeField] private MediationManager mediationManager;
-    
-    
-    void OnGUI()
+    public class Menu : MonoBehaviour
     {
-        GUI.BeginGroup(new Rect(0,0,500,500));
+        [SerializeField] private MediationManager mediationManager;
 
-        if (GUI.Button(new Rect(0, 0, 200, 50), "Init Mediation SDK"))
+        void Start()
         {
-            mediationManager.Init();
-        }
-        
-        if (GUI.Button(new Rect(0, 50, 200, 50), "Load Interstitial Ad"))
-        {
-            mediationManager.LoadInterstitialAd();
-        }
-        
-        if (GUI.Button(new Rect(0, 100, 200, 50), "Load Rewarded Ad"))
-        {
-            mediationManager.LoadRewardedAd();
-        }
-        
-        if (GUI.Button(new Rect(0, 150, 200, 50), "Show Interstitial Ad"))
-        {
-            mediationManager.ShowInterstitialAd();
-        }
-        
-        if (GUI.Button(new Rect(0, 200, 200, 50), "Show Rewarded Ad"))
-        {
-            mediationManager.ShowRewardedAd();
+            mediationManager.OnInterstitialAdCompleted += OnInterstitialCompleted;
+            mediationManager.OnRewardedAdCompleted += OnRewardedAdCompleted;
         }
 
-        string info = "Mediation SDK Status" +
-                      "\nIsInitialized :: " + mediationManager.IsInitialized +
-                      "\nIsInterstitialAdLoaded :: " + mediationManager.IsInterstitialAdLoaded +
-                      "\nIsRewardedAdLoaded :: " + mediationManager.IsRewardedAdLoaded; 
-        
-        GUI.Label(new Rect(0, 250, 200, 200), info);
+        void OnGUI()
+        {
+            GUI.BeginGroup(new Rect(0, 0, 500, 500));
 
-        GUI.EndGroup();;
+            if (GUI.Button(new Rect(0, 0, 200, 50), "Init Mediation SDK"))
+            {
+                mediationManager.Init();
+            }
+
+            if (GUI.Button(new Rect(0, 50, 200, 50), "Load Interstitial Ad"))
+            {
+                mediationManager.LoadInterstitialAd();
+            }
+
+            if (GUI.Button(new Rect(0, 100, 200, 50), "Load Rewarded Ad"))
+            {
+                mediationManager.LoadRewardedAd();
+            }
+
+            if (GUI.Button(new Rect(0, 150, 200, 50), "Show Interstitial Ad"))
+            {
+                mediationManager.ShowInterstitialAd();
+            }
+
+            if (GUI.Button(new Rect(0, 200, 200, 50), "Show Rewarded Ad"))
+            {
+                mediationManager.ShowRewardedAd();
+            }
+
+            string info = "Mediation SDK Status" +
+                          "\nIsInitialized :: " + mediationManager.IsInitialized +
+                          "\nIsInterstitialAdLoaded :: " + mediationManager.IsInterstitialAdLoaded +
+                          "\nIsRewardedAdLoaded :: " + mediationManager.IsRewardedAdLoaded;
+
+            GUI.Label(new Rect(0, 250, 200, 200), info);
+
+            GUI.EndGroup();
+            ;
+        }
+
+        void OnDestroy()
+        {
+            mediationManager.OnInterstitialAdCompleted -= OnInterstitialCompleted;
+            mediationManager.OnRewardedAdCompleted -= OnRewardedAdCompleted;
+        }
+
+        void OnInterstitialCompleted(string status)
+        {
+            Logger.Log("SHOW POPUP :: " + status);
+        }
+
+        void OnRewardedAdCompleted(string status)
+        {
+            Logger.Log("SHOW POPUP :: " + status);
+        }
     }
 }
