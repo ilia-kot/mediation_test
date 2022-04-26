@@ -22,11 +22,10 @@ namespace mediation_test
         public bool IsRewardedAdLoaded => _rewardedAd.IsLoaded;
 
         public delegate void InterstitialAdCompleted(string info);
-
-        public delegate void RewardedAdCompleted(string info);
+        public delegate void RewardedAdCompleted();
 
         public event InterstitialAdCompleted OnInterstitialAdCompleted;
-        public event RewardedAdCompleted OnRewardedAdCompleted;
+        public event RewardedAdCompleted OnUserRewarded;
 
 
         public async void Init()
@@ -52,11 +51,8 @@ namespace mediation_test
                 _interstitialAd.Interstitial.OnShowed += OnInterstitialShowed;
                 _interstitialAd.Interstitial.OnFailedShow += OnInterstitialFailedShow;
                 _interstitialAd.Interstitial.OnClosed += OnInterstitialClosed;
-
-                _rewardedAd.Rewarded.OnShowed += OnRewardedAdShown;
-                _rewardedAd.Rewarded.OnFailedShow += OnRewardedAdFailedToShow;
+                
                 _rewardedAd.Rewarded.OnUserRewarded += OnRewardedUserRewarded;
-                _rewardedAd.Rewarded.OnClosed += OnRewardedAdClosed;
 
                 IsInitialized = true;
             }
@@ -107,10 +103,7 @@ namespace mediation_test
 
                 if (_rewardedAd != null)
                 {
-                    _rewardedAd.Rewarded.OnShowed += OnRewardedAdShown;
-                    _rewardedAd.Rewarded.OnFailedShow += OnRewardedAdFailedToShow;
                     _rewardedAd.Rewarded.OnUserRewarded += OnRewardedUserRewarded;
-                    _rewardedAd.Rewarded.OnClosed += OnRewardedAdClosed;
                 }
             }
         }
@@ -131,27 +124,12 @@ namespace mediation_test
         {
             OnInterstitialAdCompleted("Interstitial Ad showed");
         }
-
-        private void OnRewardedAdClosed(object sender, EventArgs e)
-        {
-            OnRewardedAdCompleted("Rewarded Ad Closed");
-        }
-
+        
         private void OnRewardedUserRewarded(object sender, RewardEventArgs e)
         {
-            OnRewardedAdCompleted("User Rewarded");
+            OnUserRewarded();
         }
-
-        private void OnRewardedAdFailedToShow(object sender, ShowErrorEventArgs e)
-        {
-            OnRewardedAdCompleted("Rewarded Ad failed to show");
-        }
-
-        private void OnRewardedAdShown(object sender, EventArgs e)
-        {
-            OnRewardedAdCompleted("Rewarded Ad Shown");
-        }
-
+        
         #endregion
 
     }

@@ -1,20 +1,64 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace mediation_test
 {
     public class Menu : MonoBehaviour
     {
+        [SerializeField] private GameObject canvasMainMenu;
+        [SerializeField] private GameObject canvasPopup;
         [SerializeField] private MediationManager mediationManager;
+        [SerializeField] private TextMeshProUGUI textScore;
+
+        private int score = 0;
+
+        
+        public void InitMediation()
+        {
+            mediationManager.Init();
+        }
+
+        public void LoadInterstitialAd()
+        {
+            mediationManager.LoadInterstitialAd();
+        }
+
+        public void LoadRewardedAd()
+        {
+            mediationManager.LoadRewardedAd();
+        }
+
+        public void ShowInterstitialAd()
+        {
+            mediationManager.ShowInterstitialAd();
+        }
+
+        public void ShowRewardedAd()
+        {
+            mediationManager.ShowRewardedAd();
+        }
+        
+        public void ClosePopup()
+        {
+            canvasPopup.SetActive(false);
+        }
 
         void Start()
         {
             mediationManager.OnInterstitialAdCompleted += OnInterstitialCompleted;
-            mediationManager.OnRewardedAdCompleted += OnRewardedAdCompleted;
+            mediationManager.OnUserRewarded += OnUserRewarded;
         }
 
+        void Awake()
+        {
+            canvasMainMenu.SetActive(true);
+            canvasPopup.SetActive(false);
+        }
+
+        /*
         void OnGUI()
         {
             GUI.BeginGroup(new Rect(0, 0, 500, 500));
@@ -52,23 +96,24 @@ namespace mediation_test
             GUI.Label(new Rect(0, 250, 200, 200), info);
 
             GUI.EndGroup();
-            ;
         }
+        */
 
         void OnDestroy()
         {
             mediationManager.OnInterstitialAdCompleted -= OnInterstitialCompleted;
-            mediationManager.OnRewardedAdCompleted -= OnRewardedAdCompleted;
+            mediationManager.OnUserRewarded -= OnUserRewarded;
         }
 
         void OnInterstitialCompleted(string status)
         {
-            Logger.Log("SHOW POPUP :: " + status);
+            canvasPopup.SetActive(false);
         }
 
-        void OnRewardedAdCompleted(string status)
+        void OnUserRewarded()
         {
-            Logger.Log("SHOW POPUP :: " + status);
+            score++;
+            textScore.text = "Score: " + score;
         }
     }
 }
