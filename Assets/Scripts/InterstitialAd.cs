@@ -26,7 +26,7 @@ namespace mediation_test
                 interstitialAd = MediationService.Instance.CreateInterstitialAd(androidAdUnitId);
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
                 interstitialAd = MediationService.Instance.CreateInterstitialAd(iosAdUnitId);
-
+            
             interstitialAd.OnLoaded += AdLoaded;
             interstitialAd.OnFailedLoad += AdFailedToLoad;
             interstitialAd.OnShowed += AdShown;
@@ -61,27 +61,27 @@ namespace mediation_test
 
         void AdLoaded(object sender, EventArgs args)
         {
-            Logger.Log("InterstitialAd :: AdLoaded");
+            Logger.Log("InterstitialAd :: AdLoaded :: AdUnitId :: " + interstitialAd.AdUnitId);
         }
 
         void AdFailedToLoad(object sender, LoadErrorEventArgs args)
         {
-            Logger.Log("InterstitialAd :: AdFailedToLoad :: Error : " + args.Error + " Message: " + args.Message);
+            Logger.Log("InterstitialAd :: AdFailedToLoad :: AdUnitId :: " + interstitialAd.AdUnitId + " Error : " + args.Error + " Message: " + args.Message);
         }
 
         void AdShown(object sender, EventArgs args)
         {
-            Logger.Log("InterstitialAd :: AdShown");
+            Logger.Log("InterstitialAd :: AdShown :: AdUnitId :: " + interstitialAd.AdUnitId);
         }
 
         void AdFailedToShow(object sender, ShowErrorEventArgs args)
         {
-            Logger.Log("InterstitialAd :: AdFailedToShow :: Error : " + args.Error + " Message: " + args.Message);
+            Logger.Log("InterstitialAd :: AdFailedToShow :: AdUnitId :: " + interstitialAd.AdUnitId + " Error : " + args.Error + " Message: " + args.Message);
         }
 
         private void AdClosed(object sender, EventArgs args)
         {
-            Logger.Log("InterstitialAd :: AdClosed");
+            Logger.Log("InterstitialAd :: AdClosed :: AdUnitId :: " + interstitialAd.AdUnitId);
         }
 
         #endregion

@@ -64,7 +64,7 @@ namespace mediation_test
 
         void AdLoaded(object sender, EventArgs args)
         {
-            Logger.Log("RewardedAd :: AdLoaded");
+            Logger.Log("RewardedAd :: AdLoaded :: AdUnitId ::" + rewardedAd.AdUnitId);
         }
 
         void AdFailedToLoad(object sender, LoadErrorEventArgs args)
@@ -74,12 +74,12 @@ namespace mediation_test
 
         void AdShown(object sender, EventArgs args)
         {
-            Logger.Log("RewardedAd :: AdShown");
+            Logger.Log("RewardedAd :: AdShown :: AdUnitId ::" + rewardedAd.AdUnitId);
         }
 
         void UserRewarded(object sender, RewardEventArgs args)
         {
-            Logger.Log("RewardedAd :: UserRewarded");
+            Logger.Log("RewardedAd :: UserRewarded :: AdUnitId ::" + rewardedAd.AdUnitId);
         }
 
         void AdFailedToShow(object sender, ShowErrorEventArgs args)
@@ -89,7 +89,7 @@ namespace mediation_test
 
         void AdClosed(object sender, EventArgs args)
         {
-            Logger.Log("RewardedAd :: AdClosed");
+            Logger.Log("RewardedAd :: AdClosed :: AdUnitId ::" + rewardedAd.AdUnitId);
         }
 
         #endregion

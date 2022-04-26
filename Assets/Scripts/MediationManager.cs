@@ -48,9 +48,9 @@ namespace mediation_test
                 _interstitialAd.Init();
                 _rewardedAd.Init();
 
-                _interstitialAd.Interstitial.OnShowed += OnInterstitialShowed;
                 _interstitialAd.Interstitial.OnFailedShow += OnInterstitialFailedShow;
                 _interstitialAd.Interstitial.OnClosed += OnInterstitialClosed;
+                _interstitialAd.Interstitial.OnShowed += OnInterstitialShowed;
                 
                 _rewardedAd.Rewarded.OnUserRewarded += OnRewardedUserRewarded;
 
@@ -96,9 +96,9 @@ namespace mediation_test
             {
                 if (_interstitialAd != null)
                 {
-                    _interstitialAd.Interstitial.OnShowed -= OnInterstitialShowed;
                     _interstitialAd.Interstitial.OnFailedShow -= OnInterstitialFailedShow;
                     _interstitialAd.Interstitial.OnClosed -= OnInterstitialClosed;
+                    _interstitialAd.Interstitial.OnShowed -= OnInterstitialShowed;
                 }
 
                 if (_rewardedAd != null)
@@ -109,6 +109,12 @@ namespace mediation_test
         }
 
         #region CALLBACKS
+        
+        // Interstitial Ad
+        private void OnInterstitialShowed(object sender, EventArgs e)
+        {
+            OnInterstitialAdCompleted("Interstitial Ad Showed");
+        }
 
         private void OnInterstitialClosed(object sender, EventArgs e)
         {
@@ -119,12 +125,8 @@ namespace mediation_test
         {
             OnInterstitialAdCompleted("Interstitial Ad failed to show");
         }
-
-        private void OnInterstitialShowed(object sender, EventArgs e)
-        {
-            OnInterstitialAdCompleted("Interstitial Ad showed");
-        }
         
+        // Rewarded Ad
         private void OnRewardedUserRewarded(object sender, RewardEventArgs e)
         {
             OnUserRewarded();

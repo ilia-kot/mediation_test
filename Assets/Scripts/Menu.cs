@@ -12,6 +12,7 @@ namespace mediation_test
         [SerializeField] private GameObject canvasPopup;
         [SerializeField] private MediationManager mediationManager;
         [SerializeField] private TextMeshProUGUI textScore;
+        [SerializeField] private TextMeshProUGUI interstitialStatus;
 
         private int score = 0;
 
@@ -43,6 +44,7 @@ namespace mediation_test
         
         public void ClosePopup()
         {
+            canvasMainMenu.SetActive(true);
             canvasPopup.SetActive(false);
         }
 
@@ -58,47 +60,6 @@ namespace mediation_test
             canvasPopup.SetActive(false);
         }
 
-        /*
-        void OnGUI()
-        {
-            GUI.BeginGroup(new Rect(0, 0, 500, 500));
-
-            if (GUI.Button(new Rect(0, 0, 200, 50), "Init Mediation SDK"))
-            {
-                mediationManager.Init();
-            }
-
-            if (GUI.Button(new Rect(0, 50, 200, 50), "Load Interstitial Ad"))
-            {
-                mediationManager.LoadInterstitialAd();
-            }
-
-            if (GUI.Button(new Rect(0, 100, 200, 50), "Load Rewarded Ad"))
-            {
-                mediationManager.LoadRewardedAd();
-            }
-
-            if (GUI.Button(new Rect(0, 150, 200, 50), "Show Interstitial Ad"))
-            {
-                mediationManager.ShowInterstitialAd();
-            }
-
-            if (GUI.Button(new Rect(0, 200, 200, 50), "Show Rewarded Ad"))
-            {
-                mediationManager.ShowRewardedAd();
-            }
-
-            string info = "Mediation SDK Status" +
-                          "\nIsInitialized :: " + mediationManager.IsInitialized +
-                          "\nIsInterstitialAdLoaded :: " + mediationManager.IsInterstitialAdLoaded +
-                          "\nIsRewardedAdLoaded :: " + mediationManager.IsRewardedAdLoaded;
-
-            GUI.Label(new Rect(0, 250, 200, 200), info);
-
-            GUI.EndGroup();
-        }
-        */
-
         void OnDestroy()
         {
             mediationManager.OnInterstitialAdCompleted -= OnInterstitialCompleted;
@@ -107,7 +68,10 @@ namespace mediation_test
 
         void OnInterstitialCompleted(string status)
         {
-            canvasPopup.SetActive(false);
+            canvasMainMenu.SetActive(false);
+            canvasPopup.SetActive(true);
+            
+            interstitialStatus.text = status;
         }
 
         void OnUserRewarded()

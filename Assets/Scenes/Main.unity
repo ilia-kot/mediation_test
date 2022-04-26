@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 801558453}
   - component: {fileID: 801558452}
   m_Layer: 5
-  m_Name: Status
+  m_Name: InterstitialStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2828,3 +2828,4 @@ MonoBehaviour:
   canvasPopup: {fileID: 1930824726}
   mediationManager: {fileID: 55327947}
   textScore: {fileID: 201580638}
+  interstitialStatus: {fileID: 801558452}
