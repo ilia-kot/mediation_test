@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Services.Mediation;
 using UnityEngine;
 using Unity.Services.Core;
-using Unity.Services.Mediation;
-using Unity.VisualScripting;
 
 namespace mediation_test
 {
