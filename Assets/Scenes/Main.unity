@@ -755,8 +755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb009a26b3ae41f3927277cb7735f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidAdUnitId: Android_Rewarded
-  iosAdUnitId: iOS_Rewarded
+  androidAdUnitId: Rewarded_Android
+  iosAdUnitId: Rewarded_iOS
   testAdUnitId: myRewardedAdUnitId
 --- !u!1 &654729562
 GameObject:
@@ -2001,8 +2001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec07bce6b80fc47ca9e5a1fcb7e2d76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidAdUnitId: Android_Interstitial
-  iosAdUnitId: iOS_Interstitial
+  androidAdUnitId: Interstitial_Android
+  iosAdUnitId: Interstitial_iOS
   testAdUnitId: myExampleAdUnitId
 --- !u!1 &1471679810
 GameObject:
